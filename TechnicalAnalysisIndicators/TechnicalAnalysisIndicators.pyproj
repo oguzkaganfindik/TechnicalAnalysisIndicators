@@ -1,0 +1,74 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>ba2b764e-903b-4e4a-9a80-3493d80e215a</ProjectGuid>
+    <ProjectHome>
+    </ProjectHome>
+    <StartupFile>WaveTrend_Oscillator.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <Name>TechnicalAnalysisIndicators</Name>
+    <RootNamespace>TradingView</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Banker_Dip_Taramasi.py" />
+    <Compile Include="Down_Trendline_Breakout.py" />
+    <Compile Include="Alpha_Trend_indicator.py" />
+    <Compile Include="Ichimoku_Cloud.py" />
+    <Compile Include="Squeeze_Momentum.py" />
+    <Compile Include="Optimized_Trend_Tracker.py" />
+    <Compile Include="NewRSI_Divergence.py" />
+    <Compile Include="Signals\requirements.txt" />
+    <Compile Include="StockPre\Streamlit_app.py" />
+    <Compile Include="BB_Squeeze.py" />
+    <Compile Include="NewSupertrend.py" />
+    <Compile Include="Tarihsel_Getiri\requirements.txt" />
+    <Compile Include="Trend_Channel.py" />
+    <Compile Include="Endeks_Raporu.py" />
+    <Compile Include="AlgoTrade.py" />
+    <Compile Include="Signals\indicators.py" />
+    <Compile Include="StockPre\.devcontainer\devcontainer.json" />
+    <Compile Include="RSI_Divergence.py" />
+    <Compile Include="Tillson_T3.py" />
+    <Compile Include="Supertrend.py" />
+    <Compile Include="Ehanced_TillsonT3.py" />
+    <Compile Include="Volume_Spread_Analysis.py" />
+    <Compile Include="Market_Profile.py" />
+    <Compile Include="Potential_Support.py" />
+    <Compile Include="StockPre\packages.txt" />
+    <Compile Include="Most.py" />
+    <Compile Include="ParabolicSAR.py" />
+    <Compile Include="Scan.py" />
+    <Compile Include="Tarihsel_Getiri\Tarihsel_Getiri.py" />
+    <Compile Include="WaveTrend_Oscillator.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tarihsel_Getiri\" />
+    <Folder Include="Signals\" />
+    <Folder Include="StockPre\" />
+    <Folder Include="StockPre\.devcontainer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="StockPre\requirements.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+  <!-- Uncomment the CoreCompile target to enable the Build command in
+       Visual Studio and specify your pre- and post-build commands in
+       the BeforeBuild and AfterBuild targets below. -->
+  <!--<Target Name="CoreCompile" />-->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>

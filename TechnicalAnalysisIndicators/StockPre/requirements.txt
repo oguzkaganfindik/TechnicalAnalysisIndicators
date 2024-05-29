@@ -1,0 +1,13 @@
+beautifulsoup4==4.12.3
+html5lib==1.1
+lxml==5.1.0
+numpy==1.26.4
+pandas==2.2.0
+plotly==5.19.0
+selenium==4.17.2
+urllib3==1.26.18
+webdriver-manager
+streamlit==1.31.1
+seleniumbase==4.23.5
+git+https://github.com/baselsm/tvdatafeed
+requests

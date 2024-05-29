@@ -1,0 +1,2 @@
+﻿locales-all
+chromium
