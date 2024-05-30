@@ -5,7 +5,7 @@
     <ProjectGuid>ba2b764e-903b-4e4a-9a80-3493d80e215a</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>WaveTrend_Oscillator.py</StartupFile>
+    <StartupFile>Tillson_T3V2.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -26,6 +26,8 @@
     <Compile Include="Down_Trendline_Breakout.py" />
     <Compile Include="Alpha_Trend_indicator.py" />
     <Compile Include="Ichimoku_Cloud.py" />
+    <Compile Include="PFF_RSI_Strategy\PFF_RSI_Strategy.py" />
+    <Compile Include="ScanV2.py" />
     <Compile Include="Squeeze_Momentum.py" />
     <Compile Include="Optimized_Trend_Tracker.py" />
     <Compile Include="NewRSI_Divergence.py" />
@@ -34,6 +36,7 @@
     <Compile Include="BB_Squeeze.py" />
     <Compile Include="NewSupertrend.py" />
     <Compile Include="Tarihsel_Getiri\requirements.txt" />
+    <Compile Include="Tillson_T3V2.py" />
     <Compile Include="Trend_Channel.py" />
     <Compile Include="Endeks_Raporu.py" />
     <Compile Include="AlgoTrade.py" />
@@ -42,7 +45,7 @@
     <Compile Include="RSI_Divergence.py" />
     <Compile Include="Tillson_T3.py" />
     <Compile Include="Supertrend.py" />
-    <Compile Include="Ehanced_TillsonT3.py" />
+    <Compile Include="Enhanced_TillsonT3.py" />
     <Compile Include="Volume_Spread_Analysis.py" />
     <Compile Include="Market_Profile.py" />
     <Compile Include="Potential_Support.py" />
@@ -58,8 +61,12 @@
     <Folder Include="Signals\" />
     <Folder Include="StockPre\" />
     <Folder Include="StockPre\.devcontainer\" />
+    <Folder Include="PFF_RSI_Strategy\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="PFF_RSI_Strategy\1.jpg" />
+    <Content Include="PFF_RSI_Strategy\2.jpg" />
+    <Content Include="PFF_RSI_Strategy\3.jpg" />
     <Content Include="StockPre\requirements.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
