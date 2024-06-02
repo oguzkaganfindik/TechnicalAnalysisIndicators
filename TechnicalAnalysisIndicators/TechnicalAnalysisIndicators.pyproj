@@ -5,7 +5,7 @@
     <ProjectGuid>ba2b764e-903b-4e4a-9a80-3493d80e215a</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>Tillson_T3V2.py</StartupFile>
+    <StartupFile>ScanV3.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -27,6 +27,7 @@
     <Compile Include="Alpha_Trend_indicator.py" />
     <Compile Include="Ichimoku_Cloud.py" />
     <Compile Include="PFF_RSI_Strategy\PFF_RSI_Strategy.py" />
+    <Compile Include="ScanV3.py" />
     <Compile Include="ScanV2.py" />
     <Compile Include="Squeeze_Momentum.py" />
     <Compile Include="Optimized_Trend_Tracker.py" />
