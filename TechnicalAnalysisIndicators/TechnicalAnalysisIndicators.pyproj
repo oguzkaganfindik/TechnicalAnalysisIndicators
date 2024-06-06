@@ -5,7 +5,7 @@
     <ProjectGuid>ba2b764e-903b-4e4a-9a80-3493d80e215a</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>Ehler_Fisher_Transformation_Weekly.py</StartupFile>
+    <StartupFile>BinanceCryptoScanner\Crypto_Tarama_Gunluk.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -23,6 +23,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Banker_Dip_Taramasi.py" />
+    <Compile Include="BinanceCryptoScanner\Crypto_Tarama_Saatlik.py" />
+    <Compile Include="BinanceCryptoScanner\Crypto_Tarama_2_Saatlik.py" />
+    <Compile Include="BinanceCryptoScanner\Crypto_Tarama_4_Saatlik.py" />
+    <Compile Include="BinanceCryptoScanner\Crypto_Tarama_Gunluk.py" />
     <Compile Include="Down_Trendline_Breakout.py" />
     <Compile Include="Alpha_Trend_indicator.py" />
     <Compile Include="Ichimoku_Cloud.py" />
@@ -32,14 +36,14 @@
     <Compile Include="Donchain_Channel_Breakout.py" />
     <Compile Include="MostNew.py" />
     <Compile Include="PFF_RSI_Strategy\PFF_RSI_Strategy.py" />
-    <Compile Include="Scan\ScanV4.py" />
-    <Compile Include="Scan\ScanV3.py" />
-    <Compile Include="Scan\ScanV2.py" />
-    <Compile Include="Scan\TimeFrame\En_İyi_10_Tarama_2_Saatlik.py" />
-    <Compile Include="Scan\TimeFrame\En_İyi_10_Tarama_4_Saatlik.py" />
-    <Compile Include="Scan\TimeFrame\En_iyi_10_Tarama_Gunluk.py" />
+    <Compile Include="BistScanner\ScanV4.py" />
+    <Compile Include="BistScanner\ScanV3.py" />
+    <Compile Include="BistScanner\ScanV2.py" />
+    <Compile Include="BistScanner\TimeFrame\En_İyi_10_Tarama_2_Saatlik.py" />
+    <Compile Include="BistScanner\TimeFrame\En_İyi_10_Tarama_4_Saatlik.py" />
+    <Compile Include="BistScanner\TimeFrame\En_iyi_10_Tarama_Gunluk.py" />
     <Compile Include="Banker_Kompozit_Dip_Taramasi.py" />
-    <Compile Include="Scan\TimeFrame\En_İyi_10_Tarama_Saatlik.py" />
+    <Compile Include="BistScanner\TimeFrame\En_İyi_10_Tarama_Saatlik.py" />
     <Compile Include="Squeeze_Momentum.py" />
     <Compile Include="Optimized_Trend_Tracker.py" />
     <Compile Include="NewRSI_Divergence.py" />
@@ -64,13 +68,14 @@
     <Compile Include="StockPre\packages.txt" />
     <Compile Include="Most.py" />
     <Compile Include="ParabolicSAR.py" />
-    <Compile Include="Scan\Scan.py" />
+    <Compile Include="BistScanner\Scan.py" />
     <Compile Include="Tarihsel_Getiri\Tarihsel_Getiri.py" />
     <Compile Include="WaveTrend_Oscillator.py" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Scan\" />
-    <Folder Include="Scan\TimeFrame\" />
+    <Folder Include="BinanceCryptoScanner\" />
+    <Folder Include="BistScanner\" />
+    <Folder Include="BistScanner\TimeFrame\" />
     <Folder Include="Tarihsel_Getiri\" />
     <Folder Include="Signals\" />
     <Folder Include="StockPre\" />
