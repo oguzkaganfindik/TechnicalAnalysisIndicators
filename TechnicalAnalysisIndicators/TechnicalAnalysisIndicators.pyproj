@@ -34,6 +34,7 @@
     <Compile Include="Keltner_Lower_Breakout.py" />
     <Compile Include="Ehler_Fisher_Transformation_Weekly.py" />
     <Compile Include="Donchain_Channel_Breakout.py" />
+    <Compile Include="BankerFundFlowTrendAndBjorgumTSI.py" />
     <Compile Include="MostNew.py" />
     <Compile Include="PFF_RSI_Strategy\PFF_RSI_Strategy.py" />
     <Compile Include="BistScanner\ScanV4.py" />
