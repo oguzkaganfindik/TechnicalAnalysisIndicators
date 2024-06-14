@@ -5,7 +5,7 @@
     <ProjectGuid>ba2b764e-903b-4e4a-9a80-3493d80e215a</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>BinanceCryptoScanner\Crypto_Tarama_Gunluk.py</StartupFile>
+    <StartupFile>Mum_Formasyon_Bulucu.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -35,6 +35,7 @@
     <Compile Include="Ehler_Fisher_Transformation_Weekly.py" />
     <Compile Include="Donchain_Channel_Breakout.py" />
     <Compile Include="BankerFundFlowTrendAndBjorgumTSI.py" />
+    <Compile Include="Mum_Formasyon_Bulucu.py" />
     <Compile Include="MostNew.py" />
     <Compile Include="PFF_RSI_Strategy\PFF_RSI_Strategy.py" />
     <Compile Include="BistScanner\ScanV4.py" />
