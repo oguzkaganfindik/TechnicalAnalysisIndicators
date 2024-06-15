@@ -5,7 +5,7 @@
     <ProjectGuid>ba2b764e-903b-4e4a-9a80-3493d80e215a</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>Mum_Formasyon_Bulucu.py</StartupFile>
+    <StartupFile>MumFormasyonTaramalari\Mum_Formasyon_Bulucu.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -35,7 +35,7 @@
     <Compile Include="Ehler_Fisher_Transformation_Weekly.py" />
     <Compile Include="Donchain_Channel_Breakout.py" />
     <Compile Include="BankerFundFlowTrendAndBjorgumTSI.py" />
-    <Compile Include="Mum_Formasyon_Bulucu.py" />
+    <Compile Include="MumFormasyonTaramalari\Mum_Formasyon_Bulucu.py" />
     <Compile Include="MostNew.py" />
     <Compile Include="PFF_RSI_Strategy\PFF_RSI_Strategy.py" />
     <Compile Include="BistScanner\ScanV4.py" />
@@ -78,6 +78,7 @@
     <Folder Include="BinanceCryptoScanner\" />
     <Folder Include="BistScanner\" />
     <Folder Include="BistScanner\TimeFrame\" />
+    <Folder Include="MumFormasyonTaramalari\" />
     <Folder Include="Tarihsel_Getiri\" />
     <Folder Include="Signals\" />
     <Folder Include="StockPre\" />
@@ -85,6 +86,7 @@
     <Folder Include="PFF_RSI_Strategy\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="MumFormasyonTaramalari\BogaMumFormasyonlari.jpg" />
     <Content Include="PFF_RSI_Strategy\1.jpg" />
     <Content Include="PFF_RSI_Strategy\2.jpg" />
     <Content Include="PFF_RSI_Strategy\3.jpg" />
