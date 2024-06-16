@@ -5,7 +5,7 @@
     <ProjectGuid>ba2b764e-903b-4e4a-9a80-3493d80e215a</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>MumFormasyonTaramalari\Mum_Formasyon_Bulucu.py</StartupFile>
+    <StartupFile>TKE_Tarama.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -29,12 +29,14 @@
     <Compile Include="BinanceCryptoScanner\Crypto_Tarama_Gunluk.py" />
     <Compile Include="Down_Trendline_Breakout.py" />
     <Compile Include="Alpha_Trend_indicator.py" />
+    <Compile Include="TKE_Tarama.py" />
     <Compile Include="Ichimoku_Cloud.py" />
     <Compile Include="Lucid_Parabolic_SAR.py" />
     <Compile Include="Keltner_Lower_Breakout.py" />
     <Compile Include="Ehler_Fisher_Transformation_Weekly.py" />
     <Compile Include="Donchain_Channel_Breakout.py" />
     <Compile Include="BankerFundFlowTrendAndBjorgumTSI.py" />
+    <Compile Include="En_iyi_10_Tarama_ve_Mum_Formasyonları_TKEli.py" />
     <Compile Include="MumFormasyonTaramalari\Mum_Formasyon_Bulucu.py" />
     <Compile Include="MostNew.py" />
     <Compile Include="PFF_RSI_Strategy\PFF_RSI_Strategy.py" />
