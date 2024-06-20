@@ -5,7 +5,7 @@
     <ProjectGuid>ba2b764e-903b-4e4a-9a80-3493d80e215a</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>Nadaraya_Watson.py</StartupFile>
+    <StartupFile>KaufmansMovingAverageAdaptive.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -29,6 +29,7 @@
     <Compile Include="BinanceCryptoScanner\Crypto_Tarama_Gunluk.py" />
     <Compile Include="Down_Trendline_Breakout.py" />
     <Compile Include="Alpha_Trend_indicator.py" />
+    <Compile Include="KaufmansMovingAverageAdaptive.py" />
     <Compile Include="Nadaraya_Watson.py" />
     <Compile Include="TKE_Tarama.py" />
     <Compile Include="Ichimoku_Cloud.py" />
