@@ -1,11 +1,19 @@
 ﻿import os
-if os.path.exists('StockIndicators.py'):
-    os.remove('StockIndicators.py')
-
-pip install git+https://github.com/rongardF/tvdatafeed tradingview-screener
-wget https://raw.githubusercontent.com/oguzkaganfindik/TechnicalAnalysisIndicators/tree/master/TechnicalAnalysisIndicators/StockIndicators/StockIndicators.py
-
+import requests
 import pandas as pd
+
+# pip install git+https://github.com/rongardF/tvdatafeed tradingview-screener
+
+# StockIndicators.py dosyasını indir ve kaydet
+url = "https://raw.githubusercontent.com/oguzkaganfindik/TechnicalAnalysisIndicators/master/TechnicalAnalysisIndicators/StockIndicators/StockIndicators.py"
+response = requests.get(url)
+
+with open("StockIndicators.py", "wb") as file:
+    file.write(response.content)
+
+print("Dosya indirildi ve kaydedildi.")
+
+# StockIndicators modülünü içe aktar
 import StockIndicators as SI
 
 """ Stocks Komutu Coin için 'BINANCE' Borsa için 'BIST' dir"""
@@ -18,16 +26,16 @@ import StockIndicators as SI
                 Günlük / Haftalık / Aylık  : 1D, 1W, 1M
             4 - Çekilecek Bar uzunluğu     : 100  (Varsayılan Değer)
             """
-Coinler = SI.Stocks('BINANCE')
-print(Coinler)
+Hisseler = SI.Stocks('BIST')
+print(Hisseler)
 
 #Raporlama için kullanılacak başlıklar
 Titles = ['Hisse Adı', 'Son Fiyat','Giriş Sinyali', 'Çıkış Sinyali']
 df_signals = pd.DataFrame(columns=Titles)
 
-for i in range(0,len(Coinler)):
+for i in range(0,len(Hisseler)):
     try:
-        data = SI.TVGet(Coinler[i],'BIST','1D',100)
+        data = SI.TVGet(Hisseler[i],'BIST','1D',100)
         data['ALMA9'] = SI.alma(data['close'],9)
         data['ALMA13'] = SI.alma(data['close'],13)
         data['Entry'] = data['ALMA9'] > data['ALMA13']
@@ -41,7 +49,7 @@ for i in range(0,len(Coinler)):
         Buy = (Signals.loc[1,'Entry'] ==True ) and (Signals.loc[0,'Entry'] == False)
         Sell = (Signals.loc[1,'Exit'] ==True ) and (Signals.loc[0,'Exit'] == False)
         Last_Price = Signals.loc[1, 'close']
-        L1 = [Coinler[i] ,Last_Price, str(Buy), str(Sell)]
+        L1 = [Hisseler[i] ,Last_Price, str(Buy), str(Sell)]
         df_signals.loc[len(df_signals)] = L1
         print(L1)
     except:
