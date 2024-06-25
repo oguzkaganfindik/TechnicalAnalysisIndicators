@@ -5,7 +5,7 @@
     <ProjectGuid>ba2b764e-903b-4e4a-9a80-3493d80e215a</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>StockIndicators\BIST100_4Saatlik_SALMA_Makine_Ogrenmesi.py</StartupFile>
+    <StartupFile>StockIndicators\DSS_Stoch_RSI_Gunluk.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -31,6 +31,7 @@
     <Compile Include="Alpha_Trend_indicator.py" />
     <Compile Include="KaufmansMovingAverageAdaptive.py" />
     <Compile Include="ArnaudLegouxMovingAverage.py" />
+    <Compile Include="StockIndicators\DSS_Stoch_RSI_Gunluk.py" />
     <Compile Include="StockIndicators\BIST100_4Saatlik_SALMA_Makine_Ogrenmesi.py" />
     <Compile Include="StockIndicators\ALMA_BIST_9_13.py" />
     <Compile Include="StockIndicators\StockIndicators.py" />
