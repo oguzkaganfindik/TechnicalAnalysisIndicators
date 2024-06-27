@@ -5,7 +5,7 @@
     <ProjectGuid>ba2b764e-903b-4e4a-9a80-3493d80e215a</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>StockIndicators\Chandelier_Exit_Gunluk.py</StartupFile>
+    <StartupFile>NasdaqDipTarama.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -32,6 +32,7 @@
     <Compile Include="KaufmansMovingAverageAdaptive.py" />
     <Compile Include="ArnaudLegouxMovingAverage.py" />
     <Compile Include="CryptoDipTarama.py" />
+    <Compile Include="NasdaqDipTarama.py" />
     <Compile Include="StockIndicators\Chandelier_Exit_Gunluk.py" />
     <Compile Include="StockIndicators\TrendMagic_Gunluk.py" />
     <Compile Include="StockIndicators\KDJ_Indicator_Gunluk.py" />
