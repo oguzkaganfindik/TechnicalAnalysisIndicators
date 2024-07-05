@@ -5,7 +5,7 @@
     <ProjectGuid>ba2b764e-903b-4e4a-9a80-3493d80e215a</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>NasdaqDipTarama.py</StartupFile>
+    <StartupFile>StockIndicators\HeikinAshiRsiOscillator.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
