@@ -4,7 +4,6 @@ import numpy as np
 import pandas as pd
 from tradingview_screener import get_all_symbols
 from tvDatafeed import TvDatafeed, Interval
-
 tv = TvDatafeed()
 
 #Stocks for BIST or BINANCE
@@ -24,14 +23,12 @@ def Stocks(name):
 def TVGet(name,exchange,interval, nbars=100):
     interval_mapping = {
         '1m': Interval.in_1_minute,
-        '3m': Interval.in_3_minute,
         '5m': Interval.in_5_minute,
         '15m': Interval.in_15_minute,
         '30m': Interval.in_30_minute,
         '45m': Interval.in_45_minute,
         '1h': Interval.in_1_hour,
         '2h': Interval.in_2_hour,
-        '3h': Interval.in_3_hour,
         '4h': Interval.in_4_hour,
         '1D': Interval.in_daily,
         '1W': Interval.in_weekly,
@@ -52,6 +49,159 @@ def TVGet(name,exchange,interval, nbars=100):
         raise ValueError("Failed to retrieve data after multiple attempts.")
     else:
         raise ValueError("Invalid interval provided.")
+
+
+def Two_hour_converter(data):
+    df = data.copy()
+    symbol = df['symbol'].iloc[-1]
+    df['datetime'] = pd.to_datetime(df['datetime'])
+    
+    # Set the start time for filtering
+    min_start = df.loc[df['datetime'].dt.time == pd.to_datetime('09:00:00').time(), 'datetime'].min()
+    df = df[df['datetime'] >= min_start]
+    df = df.reset_index(drop=True)
+    
+    # Aggregate data for each 2-hour interval
+    agg_data = {
+        'open': 'first',
+        'high': 'max',
+        'low': 'min',
+        'close': 'last',
+        'volume': 'sum'
+    }
+    
+    # Create the 2-hour bins
+    bins = [
+        df[(df['datetime'].dt.hour >= 9) & (df['datetime'].dt.hour < 11)],
+        df[(df['datetime'].dt.hour >= 11) & (df['datetime'].dt.hour < 13)],
+        df[(df['datetime'].dt.hour >= 13) & (df['datetime'].dt.hour < 15)],
+        df[(df['datetime'].dt.hour >= 15) & (df['datetime'].dt.hour < 17)],
+        df[(df['datetime'].dt.hour >= 17)],
+    ]
+    
+    # Aggregate each bin and create a final DataFrame
+    aggregated_dfs = []
+    bin_labels = ['09:00:00', '11:00:00', '13:00:00', '15:00:00', '17:00:00']
+    for i, bin_df in enumerate(bins):
+        if not bin_df.empty:
+            aggregated_df = bin_df.groupby(bin_df['datetime'].dt.date).agg(agg_data)
+            aggregated_df['datetime'] = pd.to_datetime(aggregated_df.index.astype(str)) + pd.to_timedelta(bin_labels[i])
+            aggregated_dfs.append(aggregated_df)
+    
+    final_df = pd.concat(aggregated_dfs)
+    
+    # Reset index and sort the final DataFrame by datetime
+    final_df = final_df.reset_index(drop=True)
+    final_df = final_df.sort_values(by='datetime').reset_index(drop=True)
+    # Move datetime column to the first position
+    cols = final_df.columns.tolist()
+    cols = [cols[-1]] + cols[:-1]
+    final_df = final_df[cols]   
+    # Insert symbol column at position 1
+    final_df.insert(1, 'symbol', symbol)    
+    return final_df
+
+def Four_hour_converter(data):
+    df = data.copy()
+    symbol = df['symbol'].iloc[-1]
+    df['datetime'] = pd.to_datetime(df['datetime'])
+    
+    # Set the start time for filtering
+    min_start = df.loc[df['datetime'].dt.time == pd.to_datetime('09:00:00').time(), 'datetime'].min()
+    df = df[df['datetime'] >= min_start]
+    df = df.reset_index(drop=True)
+    
+    # Aggregate data for each 2-hour interval
+    agg_data = {
+        'open': 'first',
+        'high': 'max',
+        'low': 'min',
+        'close': 'last',
+        'volume': 'sum'
+    }
+    
+    # Create the 2-hour bins
+    bins = [
+        df[(df['datetime'].dt.hour >= 9) & (df['datetime'].dt.hour < 13)],
+        df[(df['datetime'].dt.hour >= 13) & (df['datetime'].dt.hour < 17)],
+        df[(df['datetime'].dt.hour >= 17)],
+    ]
+    
+    # Aggregate each bin and create a final DataFrame
+    aggregated_dfs = []
+    bin_labels = ['09:00:00', '13:00:00', '17:00:00']
+    for i, bin_df in enumerate(bins):
+        if not bin_df.empty:
+            aggregated_df = bin_df.groupby(bin_df['datetime'].dt.date).agg(agg_data)
+            aggregated_df['datetime'] = pd.to_datetime(aggregated_df.index.astype(str)) + pd.to_timedelta(bin_labels[i])
+            aggregated_dfs.append(aggregated_df)
+    
+    final_df = pd.concat(aggregated_dfs)
+    
+    # Reset index and sort the final DataFrame by datetime
+    final_df = final_df.reset_index(drop=True)
+    final_df = final_df.sort_values(by='datetime').reset_index(drop=True)
+    # Move datetime column to the first position
+    cols = final_df.columns.tolist()
+    cols = [cols[-1]] + cols[:-1]
+    final_df = final_df[cols]   
+    # Insert symbol column at position 1
+    final_df.insert(1, 'symbol', symbol)
+    return final_df
+
+def Daily_Converter(data):
+    df = data.copy()
+    symbol = df['symbol'].iloc[-1]
+    df['datetime'] = pd.to_datetime(df['datetime'])
+    df['date'] = df['datetime'].dt.date
+    min_start = df.loc[df['datetime'].dt.time == pd.to_datetime('09:00:00').time(), 'datetime'].min()
+    final_df = df[df['datetime'] >= min_start]
+    final_df = final_df.reset_index(drop=True)
+    final_df = final_df.groupby('date').agg({
+        'open': 'first',    # First value of 'open' in each day
+        'high': 'max',      # Maximum value of 'high' in each day
+        'low': 'min',       # Minimum value of 'low' in each day
+        'close': 'last',    # Last value of 'close' in each day
+        'volume': 'sum'     # Sum of 'volume' in each day
+    }).reset_index()
+    final_df.insert(1, 'symbol', symbol) 
+    return final_df
+
+def Weekly_converter(data):
+    df = data.copy()
+    symbol = df['symbol'].iloc[-1]
+    df['datetime'] = pd.to_datetime(df['datetime'])
+    
+    # Set the start time for filtering
+    min_start = df.loc[df['datetime'].dt.time == pd.to_datetime('09:00:00').time(), 'datetime'].min()
+    df = df[df['datetime'] >= min_start]
+    df = df.reset_index(drop=True)
+    
+    # Drop rows with NaN values (if any)
+    df.dropna(inplace=True)
+    
+    # Define aggregation rules
+    agg_data = {
+        'open': 'first',
+        'high': 'max',
+        'low': 'min',
+        'close': 'last',
+        'volume': 'sum'
+    }
+    
+    # Resample to weekly frequency and aggregate using OHLC
+    final_df = df.resample('W', on='datetime').agg(agg_data)   
+    # Insert 'symbol' column at position 1
+    final_df.insert(1, 'symbol', symbol)
+    final_df = final_df.reset_index()
+    return final_df
+
+def heikin_ashi(o, h, l, c):
+    close = (o + h + l + c) / 4
+    open_price = (o.shift(1) + c.shift(1)) / 2  # Using shift(1) to get previous values
+    high = np.maximum(h, np.maximum(open_price, close))
+    low = np.minimum(l, np.minimum(open_price, close))
+    return open_price, high, low, close
 
 #Return Series
 def sma(series, length):
@@ -609,28 +759,6 @@ def ao(high, low, fast=5, slow=34):
     ao = fastsma - slowsma
     return ao
 
-def mfi(high, low, close, volume, period=14):
-    """
-    Calculates the Money Flow Index (MFI).
-
-    Args:
-    high (pd.Series): High prices.
-    low (pd.Series): Low prices.
-    close (pd.Series): Close prices.
-    volume (pd.Series): Volume.
-    period (int, optional): The period over which to calculate MFI. Default is 14.
-
-    Returns:
-    pd.Series: The Money Flow Index values.
-    """
-    typical_price = hlc3(high, low, close)
-    raw_money_flow = typical_price * volume
-    positive_flow = (raw_money_flow * (typical_price > typical_price.shift(1))).rolling(window=period).sum()
-    negative_flow = (raw_money_flow * (typical_price < typical_price.shift(1))).rolling(window=period).sum()
-    money_flow_ratio = positive_flow / negative_flow
-    mfi = 100 - (100 / (1 + money_flow_ratio))
-    return mfi
-
 def ewo(series, short_period=5, long_period=34):
     """
     Calculate Elliott Wave Oscillator (EWO)
@@ -726,6 +854,123 @@ def kdj_indicator(high, low, close, ilong=9, isig=3):
     kdj = pj - pd
     return kdj
 
+def TKE(data, period=14, emaperiod=5, novolumedata=False):
+    """
+    Calculate Technical Knowledge Extract (TKE) score based on multiple technical indicators.
+
+    Parameters:
+    - data (DataFrame): Input data containing 'close', 'high', 'low', 'volume' columns.
+    - period (int): Period parameter used for calculating various indicators.
+    - emaperiod (int): EMA period parameter (currently not used in the function).
+    - novolumedata (bool): Flag to exclude volume-based indicators if True.
+
+    Returns:
+    - tke (Series): Series containing the calculated TKE scores.
+    """
+    df = data.copy()
+
+    # Calculate various technical indicators
+    mom_ = (df['close'] / df['close'].shift(period)) * 100
+    cci_ = cci(df['high'], df['low'], df['close'], period)
+    rsi_ = rsi(df['close'], period)
+    willr_ = williams_r(df['high'], df['low'], df['close'], period)
+    stoch_ = stochastic(df['high'], df['low'], df['close'], period)
+    
+    if novolumedata:
+        # Exclude volume-based indicators
+        tke = (cci_ + rsi_ + willr_ + stoch_) / 4
+    else:
+        # Include volume-based indicators
+        mfi_ = mfi(df['high'], df['low'], df['close'], df['volume'], period)
+        ultimate_ = ultimate_oscillator(df['high'], df['low'], df['close'], 7, 14, 28)
+        tke = (ultimate_ + mfi_ + mom_ + cci_ + rsi_ + willr_ + stoch_) / 7
+    
+    return tke
+
+def TrendMagic(high, low, close, cci_period, atr_mult, atr_period):
+    """
+    Calculate the Trend Magic indicator based on given parameters.
+
+    Parameters:
+    high (np.array): High prices.
+    low (np.array): Low prices.
+    close (np.array): Close prices.
+    cci_period (int): Period for calculating CCI.
+    atr_mult (float): Multiplier for ATR.
+    atr_period (int): Period for calculating ATR.
+
+    Returns:
+    np.array: Trend Magic values.
+    """
+    true_range = tr(high, low, close)  # Calculate True Range
+    cci_ = cci(high, low, close, cci_period)  # Calculate CCI
+    atr_ = sma(true_range, atr_period)  # Calculate ATR
+    
+    upT = low - atr_mult * atr_
+    downT = high + atr_mult * atr_
+    
+    MagicTrend = np.zeros_like(close)
+    first_valid_index = max(cci_period, atr_period)
+    
+    for i in range(first_valid_index, len(close)):
+        if cci_[i] >= 0:
+            if upT[i] < MagicTrend[i-1]:
+                MagicTrend[i] = MagicTrend[i-1]
+            else:
+                MagicTrend[i] = upT[i]
+        else:
+            if downT[i] > MagicTrend[i-1]:
+                MagicTrend[i] = MagicTrend[i-1]
+            else:
+                MagicTrend[i] = downT[i]
+
+    return MagicTrend
+
+def HARSI(data, length, smoothing):
+    """
+    RSI Heikin-Ashi generation function.
+
+    Parameters:
+    data : DataFrame
+        The input data containing 'close', 'high', and 'low' price columns.
+    length : int
+        The period length for calculating RSI.
+    smoothing : int
+        The smoothing factor for calculating Heikin-Ashi open prices.
+
+    Returns:
+    ha_open : Series
+        The Heikin-Ashi open prices.
+    ha_high : Series
+        The Heikin-Ashi high prices.
+    ha_low : Series
+        The Heikin-Ashi low prices.
+    ha_close : Series
+        The Heikin-Ashi close prices.
+    """
+    
+    close_rsi = rsi(data['close'],length)-50
+    open_rsi = close_rsi.shift(1).fillna(close_rsi)
+    
+    high_rsi_raw = rsi(data['high'],length)-50
+    low_rsi_raw = rsi(data['low'],length)-50
+    high_rsi = np.maximum(high_rsi_raw, low_rsi_raw)
+    low_rsi = np.minimum(high_rsi_raw, low_rsi_raw)
+    
+    ha_close = (open_rsi + high_rsi + low_rsi + close_rsi) / 4
+    ha_open = (open_rsi + close_rsi) / 2
+
+    for i in range(1, len(ha_open)):
+        if pd.isna(ha_open.iloc[i - smoothing]):
+            ha_open.iloc[i] = (open_rsi.iloc[i] + close_rsi.iloc[i]) / 2
+        else:
+            ha_open.iloc[i] = ((ha_open.iloc[i - 1] * smoothing) + ha_close.iloc[i - 1]) / (smoothing + 1)
+    
+    ha_high = np.maximum(high_rsi, np.maximum(ha_open, ha_close))
+    ha_low = np.minimum(low_rsi, np.minimum(ha_open, ha_close))
+
+    return ha_open, ha_high, ha_low, ha_close
+
 #Return Dataframes
 def bollinger_bands(series, length=20, std_multiplier=2):
     """
@@ -800,6 +1045,30 @@ def nadaraya_watson_envelope(data, bandwidth, mult=3.0):
     
     return df
 
+def stochastic(high, low, close, length=14):
+    """
+    Calculate the Stochastic Oscillator.
+
+    Parameters:
+    high (pd.Series): High prices
+    low (pd.Series): Low prices
+    close (pd.Series): Close prices
+    length (int): Lookback period for the Stochastic Oscillator (default: 14)
+
+    Returns:
+    pd.Series: Stochastic Oscillator values
+    """
+    # Calculate the highest high over the lookback period
+    highest_high = high.rolling(window=length).max()
+    
+    # Calculate the lowest low over the lookback period
+    lowest_low = low.rolling(window=length).min()
+    
+    # Calculate the Stochastic Oscillator
+    stoch = 100 * ((close - lowest_low) / (highest_high - lowest_low))
+    
+    return stoch
+
 def stoch_rsi(series, length_rsi=14, length_stochrsi=14, k=3, d=3):
     """
     Calculate the Stochastic RSI (SRSI).
@@ -830,6 +1099,46 @@ def stoch_rsi(series, length_rsi=14, length_stochrsi=14, k=3, d=3):
     srsi = pd.DataFrame({'fast': k_values, 'slow': d_values})
 
     return srsi
+
+def ultimate_oscillator(high, low, close, short_period=7, medium_period=14, long_period=28):
+    """
+    Calculate the Ultimate Oscillator
+
+    Parameters:
+    high (pd.Series): High prices
+    low (pd.Series): Low prices
+    close (pd.Series): Close prices
+    short_period (int): Look-back period for short-term (default is 7)
+    medium_period (int): Look-back period for medium-term (default is 14)
+    long_period (int): Look-back period for long-term (default is 28)
+
+    Returns:
+    pd.Series: Ultimate Oscillator values
+    """
+    # Calculate True Low (TL) and True High (TH)
+    true_low = pd.concat([low, close.shift(1)], axis=1).min(axis=1)
+    true_high = pd.concat([high, close.shift(1)], axis=1).max(axis=1)
+    
+    # Calculate Buying Pressure (BP)
+    buying_pressure = close - true_low
+    
+    # Calculate True Range (TR)
+    true_range = true_high - true_low
+    
+    # Calculate the average BP and TR for each period
+    avg_bp_short = buying_pressure.rolling(window=short_period).sum()
+    avg_tr_short = true_range.rolling(window=short_period).sum()
+    
+    avg_bp_medium = buying_pressure.rolling(window=medium_period).sum()
+    avg_tr_medium = true_range.rolling(window=medium_period).sum()
+    
+    avg_bp_long = buying_pressure.rolling(window=long_period).sum()
+    avg_tr_long = true_range.rolling(window=long_period).sum()
+    
+    # Calculate the Ultimate Oscillator
+    ult_osc = 100 * ((4 * avg_bp_short / avg_tr_short) + (2 * avg_bp_medium / avg_tr_medium) + (avg_bp_long / avg_tr_long)) / (4 + 2 + 1)
+    
+    return ult_osc
 
 def macd(series, fast=12, slow=26, signal=9):
     """
@@ -1377,40 +1686,45 @@ def EWO_Signal(data, short_period, long_period):
     df['Exit'] = df['Ewo'] < 0
     return df
 
-def Ichimoku_Signal(data, n1=9, n2=26, n3=52, n4=26, n5=26):
-    df = data.copy()
-    
-    # Conversion Line (Tenkan-sen)
-    high1 = df['high'].rolling(window=n1).max()
-    low1 = df['low'].rolling(window=n1).min()
-    df['tenkansen'] = (high1 + low1) / 2                                    
-    
-    # Base Line (Kijun-sen)
-    high2 = df['high'].rolling(window=n2).max()
-    low2 = df['low'].rolling(window=n2).min()
-    df['kijunsen'] = (high2 + low2) / 2                                     
-    
-    # Leading Span A (Senkou Span A)
-    df['senkou_A'] = ((df['tenkansen'] + df['kijunsen']) / 2).shift(n2)
-
-    # Leading Span B (Senkou Span B)
-    high3 = df['high'].rolling(window=n3).max()
-    low3 = df['low'].rolling(window=n3).min()
-    df['senkou_B'] = ((high3 + low3) / 2).shift(n4)
-    
-    # Lagging Span (Chikou Span)
-    df['chikou'] = df['close'].shift(-n5)
-
-    df['Entry'] = (df['close'] > df['senkou_A']) & (df['close'] > df['senkou_B']) & (df['close'] > df['kijunsen']) &  df['chikou'] > df['close']
-    df['Exit'] = (df['close'] < df['senkou_A']) | (df['close'] < df['senkou_B']) | (df['close'] < df['kijunsen']) | (df['chikou'] < df['close'])
-
-    return df
-
 def Relative_Volume_Signal(data,length=10,limitl=0.9,limith=1.3):
     df=data.copy()
     df['RV'] = relative_volume(df['volume'],length)
     df['Entry'] = df['RV'] > limith
     df['Exit'] = df['RV'] < limitl
+    return df
+
+def chandelier_exit(data, length=22, mult=3.0):
+    df=data.copy()
+    """
+    Calculates the Chandelier Exit indicator using high, low, and close prices.
+
+    Args:
+    data (pd.DataFrame): DataFrame containing 'high', 'low', and 'close' prices.
+    length (int, optional): The period over which the ATR is calculated. Default is 22.
+    mult (float, optional): The multiplier for ATR. Default is 3.0.
+
+    Returns:
+    pd.DataFrame: The input DataFrame with additional columns for Chandelier Exit values, entry, and exit signals.
+    """
+    # Calculate ATR
+    atr_value = atr(df['high'], df['low'], df['close'], period=length)
+
+    long_stop = df['close'].rolling(window=length).max() - atr_value * mult
+    short_stop = df['close'].rolling(window=length).min() + atr_value * mult
+
+    long_stop_prev = long_stop.shift(1)
+    short_stop_prev = short_stop.shift(1)
+
+    condition_long = (df['close'].shift(1) > long_stop_prev) & (df['close'] > short_stop_prev)
+    condition_short = (df['close'].shift(1) < short_stop_prev) & (df['close'] < long_stop_prev)
+
+    direction = np.where(condition_long, 1, np.where(condition_short, -1, np.nan))
+    direction = pd.Series(direction).ffill().bfill().astype(int)
+    df['long_stop'] = long_stop
+    df['short_stop'] = long_stop
+    df['Entry'] = (direction==1)
+    df['Exit'] = (direction==-1)
+
     return df
 
 def Divergence(data,DivCheck,order=3):
