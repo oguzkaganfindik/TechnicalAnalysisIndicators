@@ -34,6 +34,7 @@
     <Compile Include="CryptoDipTarama.py" />
     <Compile Include="NasdaqDipTarama.py" />
     <Compile Include="StockIndicators\Chandelier_Exit_Gunluk.py" />
+    <Compile Include="StockIndicators\HeikinAshiRsiOscillator.py" />
     <Compile Include="StockIndicators\TrendMagic_Gunluk.py" />
     <Compile Include="StockIndicators\KDJ_Indicator_Gunluk.py" />
     <Compile Include="StockIndicators\DSS_Stoch_RSI_Gunluk.py" />
