@@ -5,7 +5,7 @@
     <ProjectGuid>ba2b764e-903b-4e4a-9a80-3493d80e215a</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>StockIndicators\ESTA.py</StartupFile>
+    <StartupFile>BreakOut\Murreymml.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -27,11 +27,17 @@
     <Compile Include="BinanceCryptoScanner\Crypto_Tarama_2_Saatlik.py" />
     <Compile Include="BinanceCryptoScanner\Crypto_Tarama_4_Saatlik.py" />
     <Compile Include="BinanceCryptoScanner\Crypto_Tarama_Gunluk.py" />
+    <Compile Include="BreakOut\Murreymml.py" />
+    <Compile Include="BreakOut\TrendSense.py" />
+    <Compile Include="BreakOut\BreakOut2saat.py" />
+    <Compile Include="BreakOut\BreakOut4saat.py" />
+    <Compile Include="BreakOut\BreakOutGunluk.py" />
     <Compile Include="Down_Trendline_Breakout.py" />
     <Compile Include="Alpha_Trend_indicator.py" />
     <Compile Include="KaufmansMovingAverageAdaptive.py" />
     <Compile Include="ArnaudLegouxMovingAverage.py" />
     <Compile Include="CryptoDipTarama.py" />
+    <Compile Include="BreakOut\PivotUzaklik.py" />
     <Compile Include="NasdaqDipTarama.py" />
     <Compile Include="StockIndicators\Chandelier_Exit_Gunluk.py" />
     <Compile Include="StockIndicators\ESTA.py" />
@@ -97,6 +103,7 @@
     <Folder Include="BistScanner\" />
     <Folder Include="BistScanner\TimeFrame\" />
     <Folder Include="MumFormasyonTaramalari\" />
+    <Folder Include="BreakOut\" />
     <Folder Include="StockIndicators\" />
     <Folder Include="Tarihsel_Getiri\" />
     <Folder Include="Signals\" />
